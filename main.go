@@ -7,8 +7,12 @@ import (
 
 	"github.com/gorilla/mux"
 
+	// imports with the dot on tbhe begginging allow to use its methods without the package name. example: `Method` instead of `package.Method`
+	. "github.com/gugutz/stairs-backend-challenge/config"
 	. "github.com/gugutz/stairs-backend-challenge/dao"
-	. "github.com/gugutz/stairs-backend-challenge/router"
+
+	// here i declare the variable that holds the imported package right on the import line
+	router "github.com/gugutz/stairs-backend-challenge/router"
 )
 
 // import database access object from project
@@ -24,22 +28,15 @@ func init() {
 	dao.Connect()
 }
 
-func YourHandler(w http.ResponseWriter, r *http.Request) {
-    w.Write([]byte("Gorilla!\n"))
-}
 
 func main() {
 	r := mux.NewRouter()
-	r.HandleFunc("/wines/{id}", WineHandler).Methods(GET)
-	r.HandleFunc("/wines/{id}/edit", WineHandler)
-	r.HandleFunc("/wines", ArticlesCategoryHandler)
-	r.HandleFunc("/wines/{category}/{id:[0-9]+}", ArticleHandler)
-	r.HandleFunc("/", HomeHandler)
-	// http.Handle("/", r)
-	http.Handle("/", YourHandler)
+	r.HandleFunc("/wines/{id}", router.Get).Methods("GET")
+	r.HandleFunc("/wines/{id}/edit", router.Update).Methods("POST")
+	r.HandleFunc("/wines", router.GetAll).Methods("GET")
+	http.Handle("/", r)
 	
 	var port = ":3000"
 	fmt.Println("Server running in port:", port)
-	log.Fatal(srv.ListenAndServe())
-
+	log.Fatal(http.ListenAndServe(port, r))
 }
