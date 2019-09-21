@@ -15,8 +15,11 @@ import (
 var dao = DAO{}
 
 func init() {
+	config.Read()
+
 	dao.Server = config.Server
 	dao.Database = config.Database
+	dao.Collection = config.Collection
 	dao.Connect()
 }
 
