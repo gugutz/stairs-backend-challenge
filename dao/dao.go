@@ -10,29 +10,33 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-type DAO {
+type DAO struct {
 	Server string
 	Database string
+	Collection string
 }
-
-//Set the collection to use in mongo db
-collection := client.Database("wines_db").Collection("wines")
-host = "mongodb://localhost:27017"
-
-// Set client options
-client, err := mongo.NewClient(options.Client().ApplyURI({host}))
-if err != nil { return err }
 
 // Connect to MongoDB
 func (dao *DAO) Connect() {
+	// Set client options
+	client, err := mongo.NewClient(options.Client().ApplyURI(dao.Server)
+	if err != nil { return err }
+
+	// connect
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 	err = client.Connect(ctx)
-	fmt.Println("Connected to MongoDB!")
-	if err != nil { return err }
+	if err != nil {
+		return err
+	}
+	else {
+		fmt.Println("Connected to MongoDB!")
+	}
 }
 
 func (dao *DAO) GetAll (){
+	//Set the collection to use in mongo db
+	collection := client.Database(dao.Database).Collection(dao.Collection)
 	ctx, _ = context.WithTimeout(context.Background(), 30*time.Second)
 	cur, err := collection.Find(ctx, bson.D{})
 	if err != nil { log.Fatal(err) }
