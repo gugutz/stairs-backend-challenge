@@ -13,6 +13,7 @@ import (
 
 // import database access object from project
 var dao = DAO{}
+var config = Config{}
 
 func init() {
 	config.Read()
