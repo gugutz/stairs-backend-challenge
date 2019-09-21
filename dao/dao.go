@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"time"
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -17,10 +18,10 @@ type DAO struct {
 }
 
 // Connect to MongoDB
-func (dao *DAO) Connect() {
+func (dao *DAO) Connect() error {
 	// Set client options
-	client, err := mongo.NewClient(options.Client().ApplyURI(dao.Server)
-	if err != nil { return err }
+	client, err := mongo.NewClient(options.Client().ApplyURI(dao.Server))
+	// if err != nil { return err }
 
 	// connect
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
@@ -28,16 +29,18 @@ func (dao *DAO) Connect() {
 	err = client.Connect(ctx)
 	if err != nil {
 		return err
-	}
-	else {
+	} else {
 		fmt.Println("Connected to MongoDB!")
 	}
+	return err
 }
 
 func (dao *DAO) GetAll (){
+	// Set client options
+	client, err := mongo.NewClient(options.Client().ApplyURI(dao.Server))
 	//Set the collection to use in mongo db
 	collection := client.Database(dao.Database).Collection(dao.Collection)
-	ctx, _ = context.WithTimeout(context.Background(), 30*time.Second)
+	ctx, _ := context.WithTimeout(context.Background(), 30*time.Second)
 	cur, err := collection.Find(ctx, bson.D{})
 	if err != nil { log.Fatal(err) }
 	defer cur.Close(ctx)
