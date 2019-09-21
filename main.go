@@ -7,9 +7,18 @@ import (
 
 	"github.com/gorilla/mux"
 
+	. "github.com/gugutz/stairs-backend-challenge/dao"
 	. "github.com/gugutz/stairs-backend-challenge/router"
 )
 
+// import database access object from project
+var dao = DAO{}
+
+func init() {
+	dao.Server = config.Server
+	dao.Database = config.Database
+	dao.Connect()
+}
 
 func YourHandler(w http.ResponseWriter, r *http.Request) {
     w.Write([]byte("Gorilla!\n"))

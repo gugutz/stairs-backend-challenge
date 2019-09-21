@@ -6,8 +6,11 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
+	. "github.com/gugutz/stairs-backend/dao"
+	. "github.com/gugutz/stairs-backend/models"
 )
 
+var dao = DAO{}
 
 func ArticlesCategoryHandler(w http.ResponseWriter, r *http.Request) {
 	// mux.Vars(r) gets the variables (params) from the request
