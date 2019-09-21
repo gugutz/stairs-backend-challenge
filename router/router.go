@@ -6,8 +6,8 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
-	. "github.com/gugutz/stairs-backend/dao"
-	. "github.com/gugutz/stairs-backend/models"
+	. "github.com/gugutz/stairs-backend-challenge/dao"
+	. "github.com/gugutz/stairs-backend-challenge/models"
 )
 
 var dao = DAO{}
