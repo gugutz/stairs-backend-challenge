@@ -1,9 +1,9 @@
-package wines
+package models
 
 type Wine struct {
-	Id int
+	Id string
 	Name string
-	Harvest string
+	Harvest int
 	Country string
 	Ammount int
 	Description string
