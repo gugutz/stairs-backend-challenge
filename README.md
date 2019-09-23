@@ -26,6 +26,10 @@ This setup also raises a **Mongo Express** instance to make this easier.
 
 The address to the Mongo Express configuration page is: **`localhost:8081`**
 
+### Updating the configuration file
+
+After creating the database and the collection, open the `config.toml` file in the root folder and update the fields to match the name of the database and the collection you created.
+
 ### Run the API 
 After raising the database instance, run the API:
 ```sh
